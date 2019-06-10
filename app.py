@@ -1,12 +1,14 @@
 import os
 
+import sqlite3
+from sqlite3 import Error
 from flask import Flask, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from helper import create_connection, apology
+from helper import apology
 
 # Configure application
 app = Flask(__name__)
@@ -28,14 +30,52 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] ="filesystem"
 Session(app)
 
-# # Configure database
-# conn = create_connection("mytime.db")
+# Configure database
+conn = sqlite3.connect("mytime.db")
+conn.execute('''CREATE TABLE IF NOT EXISTS user
+                (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                 username TEXT NOT NULL,
+                 hash TEXT NOT NULL);''')
+conn.close()
 
 @app.route("/")
 def index():
     """ Homepage """
     return render_template("index.html")
 
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    """ Register """
+    if request.method == "GET":
+        return render_template("register.html")
+
+    else:
+        # Create database connection
+        conn = sqlite3.connect("mytime.db")
+        cur = conn.cursor()
+        username = request.form.get("username")
+
+        if not request.form.get("username"):
+            return apology("Enter username")
+
+        # check username available or not
+        cur.execute("SELECT username FROM user WHERE username=?", (username,))
+        if cur.fetchone() != None:
+            return apology("Username is taken")
+
+        if not request.form.get("password") or not request.form.get("confirmation"):
+            return apology("Enter password and confirmation")
+
+        if request.form.get("password") != request.form.get("confirmation"):
+            return apology("Password and confirmation do not match")
+
+        hash_password = generate_password_hash(request.form.get("password"))
+
+        # Add user into database
+        cur.execute("INSERT INTO user (username, hash) VALUES (?, ?)", (username, hash_password))
+        conn.commit()
+        conn.close()
+        return redirect("/")
 
 def errorhandler(e):
     """Handle error """
