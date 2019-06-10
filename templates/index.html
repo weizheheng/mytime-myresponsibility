@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Homepage
+{% endblock %}
+
+{% block main %}
+    <form id="register" action="/register" method="post">
+    <div class = "row">
+        <div class="col-5">
+            <img class="time" src="static/time.png">
+        </div>
+        <div id="homepagetext" class="col-7">
+            <p id="t1"><b>Not enough Time?</b></p>
+            <p id="t2">Don't know how to <b>manage</b> your time?</p>
+            <p id="t3">Worry not, <b>join</b> us now and make good use of your time. </p>
+            <p id="t4"><i><b>" Your Time Your Responsibility "</i></b> </p>
+            <button class="btn btn-primary btn-lg" type="submit">Register now!</button>
+        </div>
+    </div>
+    </form>
+
+{% endblock %}
