@@ -94,13 +94,14 @@ def login():
 
         # Query database for username
         conn = sqlite3.connect("mytime.db")
+        conn.row_factory = sqlite3.Row
         cur = conn.cursor()
         cur.execute("SELECT username, hash FROM user WHERE username=?",(request.form.get("username"),))
         rows = cur.fetchone()
         if rows == None:
             return apology("Username does not exists")
         else:
-            if not check_password_hash(rows[1], request.form.get("password")):
+            if not check_password_hash(rows['hash'], request.form.get("password")):
                 return apology("Incorrect username and/or password")
         conn.close()
         return redirect("/")
