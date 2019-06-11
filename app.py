@@ -9,7 +9,7 @@ from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from helper import apology
+from helper import apology, login_required
 
 # Configure application
 app = Flask(__name__)
@@ -81,6 +81,10 @@ def register():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+
+    # Forget any user_id
+    session.clear()
+
     # Login page
     if request.method == "GET":
         return render_template("login.html")
@@ -96,15 +100,35 @@ def login():
         conn = sqlite3.connect("mytime.db")
         conn.row_factory = sqlite3.Row
         cur = conn.cursor()
-        cur.execute("SELECT username, hash FROM user WHERE username=?",(request.form.get("username"),))
+        cur.execute("SELECT * FROM user WHERE username=?",(request.form.get("username"),))
         rows = cur.fetchone()
         if rows == None:
             return apology("Username does not exists")
         else:
             if not check_password_hash(rows['hash'], request.form.get("password")):
                 return apology("Incorrect username and/or password")
+        # Remember which user has logged in
+        session["user_id"] = rows['id']
+
         conn.close()
-        return redirect("/")
+        return render_template("dashboard.html")
+
+@app.route("/logout")
+def logout():
+    # Forget any user_id
+    session.clear()
+
+    # Redirect user to homepage
+    return redirect("/")
+
+@app.route("/dashboard", methods=["GET", "POST"])
+@login_required
+def dashboard():
+    return render_template("dashboard.html")
+
+@app.route("/history")
+def history():
+    return render_template("history.html")
 
 def errorhandler(e):
     """Handle error """
