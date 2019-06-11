@@ -1,4 +1,5 @@
 import os
+import sys
 
 import sqlite3
 from sqlite3 import Error
@@ -12,6 +13,7 @@ from helper import apology
 
 # Configure application
 app = Flask(__name__)
+app.debug = True
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -74,6 +76,32 @@ def register():
         # Add user into database
         cur.execute("INSERT INTO user (username, hash) VALUES (?, ?)", (username, hash_password))
         conn.commit()
+        conn.close()
+        return redirect("/login")
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    # Login page
+    if request.method == "GET":
+        return render_template("login.html")
+
+    else:
+        # check username and password
+        if not request.form.get("username"):
+            return apology("Must provide username")
+        elif not request.form.get("password"):
+            return apology("Must provide password")
+
+        # Query database for username
+        conn = sqlite3.connect("mytime.db")
+        cur = conn.cursor()
+        cur.execute("SELECT username, hash FROM user WHERE username=?",(request.form.get("username"),))
+        rows = cur.fetchone()
+        if rows == None:
+            return apology("Username does not exists")
+        else:
+            if not check_password_hash(rows[1], request.form.get("password")):
+                return apology("Incorrect username and/or password")
         conn.close()
         return redirect("/")
 
