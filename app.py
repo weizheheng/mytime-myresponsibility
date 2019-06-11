@@ -111,7 +111,7 @@ def login():
         session["user_id"] = rows['id']
 
         conn.close()
-        return render_template("dashboard.html")
+        return redirect("/dashboard")
 
 @app.route("/logout")
 def logout():
@@ -124,7 +124,19 @@ def logout():
 @app.route("/dashboard", methods=["GET", "POST"])
 @login_required
 def dashboard():
-    return render_template("dashboard.html")
+
+    # Get the username using user_id
+    if request.method == "GET":
+
+        # Query username from database
+        conn = sqlite3.connect("mytime.db")
+        conn.row_factory = sqlite3.Row
+        cur = conn.cursor()
+        cur.execute("SELECT username FROM user WHERE id = ?", (session.get("user_id"),))
+        rows = cur.fetchone()
+        username = rows['username']
+        conn.close()
+        return render_template("dashboard.html", username=username)
 
 @app.route("/history")
 def history():
