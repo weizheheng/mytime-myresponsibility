@@ -73,3 +73,7 @@ body {
 #t1, #t2, #t3, #t4 {
     font-size: 40px;
 }
+
+#welcome, #message {
+    font-size: 30px;
+}
