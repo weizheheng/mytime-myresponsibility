@@ -79,12 +79,12 @@ body {
     font-size: 30px;
 }
 
-#welcome, #message {
+#welcome1, #message1, #welcome2, #message2 {
     font-size: 30px;
 }
 
 
-#first_row, #sec_row, #third_row, #fourth_row {
+#first_row, #sec_row, #third_row, #fourth_row, #row1, #row2, #row3, #row4 {
     padding-top:30px;
 }
 
@@ -94,7 +94,7 @@ body {
 
 
 .green-border textarea {
-    height: 200px;
+    height: 150px;
     width: 225px;
     max-height:100%;
     max-width:100%;
@@ -109,4 +109,8 @@ body {
 .green-border .form-control:focus {
     border: 2px solid #8bc34a;
     box-shadow: 0 0 0 0.2rem rgba(186, 195, 74, .25);
+}
+
+#readonly {
+    background-color:white;
 }
