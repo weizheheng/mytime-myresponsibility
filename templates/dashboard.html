@@ -1,0 +1,188 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-12">
+            <span id="welcome2"> Welcome back <b>{{username}}</b>,</span><br>
+            <span id="message2"> Make <b><u><span id="date"></span></b></u> a good one! </span>
+        </div>
+    </div>
+    <div id="row1" class="row">
+        <div class="col-3">
+            <div class="time-control">
+                0800
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="time-control">
+                0900
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="time-control">
+                1000
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="time-control">
+                1100
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <div class="form-group green-border">
+                <textarea id="readonly" readonly class="form-control">{{ rows['task1'] }}</textarea>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group green-border">
+                <textarea id="readonly" readonly class="form-control">{{ rows['task2'] }}</textarea>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group green-border">
+                <textarea id="readonly" readonly class="form-control">{{ rows['task3'] }}</textarea>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group green-border">
+                <textarea id="readonly" readonly class="form-control">{{ rows['task4'] }}</textarea>
+            </div>
+        </div>
+    </div>
+    <div id="row2" class="row">
+        <div class="col-3">
+            <div class="time-control">
+                1200
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="time-control">
+                1300
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="time-control">
+                1400
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="time-control">
+                1500
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <div class="form-group green-border">
+                <textarea id="readonly" readonly class="form-control">{{ rows['task5'] }}</textarea>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group green-border">
+                <textarea id="readonly" readonly class="form-control">{{ rows['task6'] }}</textarea>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group green-border">
+                <textarea id="readonly" readonly class="form-control">{{ rows['task7'] }}</textarea>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group green-border">
+                <textarea id="readonly" readonly class="form-control">{{ rows['task8'] }}</textarea>
+            </div>
+        </div>
+    </div>
+    <div id="row3" class="row">
+        <div class="col-3">
+            <div class="time-control">
+                1600
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="time-control">
+                1700
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="time-control">
+                1800
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="time-control">
+                1900
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <div class="form-group green-border">
+                <textarea id="readonly" readonly class="form-control">{{ rows['task9'] }}</textarea>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group green-border">
+                <textarea id="readonly" readonly class="form-control">{{ rows['task10'] }}</textarea>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group green-border">
+                <textarea id="readonly" readonly class="form-control">{{ rows['task11'] }}</textarea>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group green-border">
+                <textarea id="readonly" readonly class="form-control">{{ rows['task12'] }}</textarea>
+            </div>
+        </div>
+    </div>
+    <div id="row4" class="row">
+        <div class="col-3">
+            <div class="time-control">
+                2000
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="time-control">
+                2100
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="time-control">
+                2200
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <div class="form-group green-border">
+                <textarea id="readonly" readonly class="form-control">{{ rows['task13'] }}</textarea>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group green-border">
+                <textarea id="readonly" readonly class="form-control">{{ rows['task14'] }}</textarea>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group green-border">
+                <textarea id="readonly" readonly class="form-control">{{ rows['task15'] }}</textarea>
+            </div>
+        </div>
+    </div>
+    <script>
+        var d = new Date();
+        var date = d.getDate();
+        var month =  d.getMonth();
+        var year = d.getFullYear();
+        var dateString = year + "/" + (month+1) + "/" + date;
+        document.getElementById('date').innerHTML = dateString;
+    </script>
+{% endblock %}

@@ -73,3 +73,44 @@ body {
 #t1, #t2, #t3, #t4 {
     font-size: 40px;
 }
+
+/* style for the time */
+.time-control {
+    font-size: 30px;
+}
+
+#welcome1, #message1, #welcome2, #message2 {
+    font-size: 30px;
+}
+
+
+#first_row, #sec_row, #third_row, #fourth_row, #row1, #row2, #row3, #row4 {
+    padding-top:30px;
+}
+
+#score {
+    font-size: 30px;
+}
+
+
+.green-border textarea {
+    height: 150px;
+    width: 225px;
+    max-height:100%;
+    max-width:100%;
+    resize:none;
+    font-size:20px;
+    display:inline-block;
+    text-align:center;
+    vertical-align:middle;
+    border: 2px solid #8bc34a;
+}
+
+.green-border .form-control:focus {
+    border: 2px solid #8bc34a;
+    box-shadow: 0 0 0 0.2rem rgba(186, 195, 74, .25);
+}
+
+#readonly {
+    background-color:white;
+}
