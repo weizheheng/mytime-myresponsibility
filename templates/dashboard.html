@@ -6,15 +6,12 @@
 
 {% block main %}
     <div class="row">
-        <div class="col-6">
-            <span id="welcome">Welcome back <b>{{ username }}</b></span><br>
-            <span id="message">Make <u><b><span id="date"></span></b></u> a <b>great</b> one!</span>
-        </div>
-        <div class="col-6">
-            <span id="score"> SCORE: </span>
+        <div class="col-12">
+            <span id="welcome2"> Welcome back <b>{{username}}</b>,</span><br>
+            <span id="message2"> Make <b><u><span id="date"></span></b></u> a good one! </span>
         </div>
     </div>
-    <div id="first_row" class="row">
+    <div id="row1" class="row">
         <div class="col-3">
             <div class="time-control">
                 0800
@@ -39,26 +36,26 @@
     <div class="row">
         <div class="col-3">
             <div class="form-group green-border">
-                <textarea class="form-control" id="t08" name="t0800" placeholder="Keep it simple and precise..."></textarea>
+                <textarea id="readonly" readonly class="form-control">{{ rows['task1'] }}</textarea>
             </div>
         </div>
         <div class="col-3">
             <div class="form-group green-border">
-                <textarea class="form-control" id="t09" name="t0900" placeholder="Eg: Breakfast + Exercise"></textarea>
+                <textarea id="readonly" readonly class="form-control">{{ rows['task2'] }}</textarea>
             </div>
         </div>
         <div class="col-3">
             <div class="form-group green-border">
-                <textarea class="form-control" id="t10" name="t1000" placeholder="Tasks"></textarea>
+                <textarea id="readonly" readonly class="form-control">{{ rows['task3'] }}</textarea>
             </div>
         </div>
         <div class="col-3">
             <div class="form-group green-border">
-                <textarea class="form-control" id="t11" name="t1100" placeholder="Tasks"></textarea>
+                <textarea id="readonly" readonly class="form-control">{{ rows['task4'] }}</textarea>
             </div>
         </div>
     </div>
-    <div id="sec_row" class="row">
+    <div id="row2" class="row">
         <div class="col-3">
             <div class="time-control">
                 1200
@@ -83,26 +80,26 @@
     <div class="row">
         <div class="col-3">
             <div class="form-group green-border">
-                <textarea class="form-control" id="t12" name="t1200" placeholder="Tasks"></textarea>
+                <textarea id="readonly" readonly class="form-control">{{ rows['task5'] }}</textarea>
             </div>
         </div>
         <div class="col-3">
             <div class="form-group green-border">
-                <textarea class="form-control" id="t13" name="t1300" placeholder="Tasks"></textarea>
+                <textarea id="readonly" readonly class="form-control">{{ rows['task6'] }}</textarea>
             </div>
         </div>
         <div class="col-3">
             <div class="form-group green-border">
-                <textarea class="form-control" id="t14" name="t1400" placeholder="Tasks"></textarea>
+                <textarea id="readonly" readonly class="form-control">{{ rows['task7'] }}</textarea>
             </div>
         </div>
         <div class="col-3">
             <div class="form-group green-border">
-                <textarea class="form-control" id="t15" name="t1500" placeholder="Tasks"></textarea>
+                <textarea id="readonly" readonly class="form-control">{{ rows['task8'] }}</textarea>
             </div>
         </div>
     </div>
-    <div id="thid_row" class="row">
+    <div id="row3" class="row">
         <div class="col-3">
             <div class="time-control">
                 1600
@@ -127,26 +124,26 @@
     <div class="row">
         <div class="col-3">
             <div class="form-group green-border">
-                <textarea class="form-control" id="t16" name="t1600" placeholder="Tasks"></textarea>
+                <textarea id="readonly" readonly class="form-control">{{ rows['task9'] }}</textarea>
             </div>
         </div>
         <div class="col-3">
             <div class="form-group green-border">
-                <textarea class="form-control" id="t17" name="t1700" placeholder="Tasks"></textarea>
+                <textarea id="readonly" readonly class="form-control">{{ rows['task10'] }}</textarea>
             </div>
         </div>
         <div class="col-3">
             <div class="form-group green-border">
-                <textarea class="form-control" id="t18" name="t1800" placeholder="Tasks"></textarea>
+                <textarea id="readonly" readonly class="form-control">{{ rows['task11'] }}</textarea>
             </div>
         </div>
         <div class="col-3">
             <div class="form-group green-border">
-                <textarea class="form-control" id="t19" name="t1900" placeholder="Tasks"></textarea>
+                <textarea id="readonly" readonly class="form-control">{{ rows['task12'] }}</textarea>
             </div>
         </div>
     </div>
-    <div id="fourth_row" class="row">
+    <div id="row4" class="row">
         <div class="col-3">
             <div class="time-control">
                 2000
@@ -166,17 +163,17 @@
     <div class="row">
         <div class="col-3">
             <div class="form-group green-border">
-                <textarea class="form-control" id="t20" name="t2000" placeholder="Tasks"></textarea>
+                <textarea id="readonly" readonly class="form-control">{{ rows['task13'] }}</textarea>
             </div>
         </div>
         <div class="col-3">
             <div class="form-group green-border">
-                <textarea class="form-control" id="t21" name="t2100" placeholder="Tasks"></textarea>
+                <textarea id="readonly" readonly class="form-control">{{ rows['task14'] }}</textarea>
             </div>
         </div>
         <div class="col-3">
             <div class="form-group green-border">
-                <textarea class="form-control" id="t22" name="t2200" placeholder="Tasks"></textarea>
+                <textarea id="readonly" readonly class="form-control">{{ rows['task15'] }}</textarea>
             </div>
         </div>
     </div>
@@ -188,5 +185,4 @@
         var dateString = year + "/" + (month+1) + "/" + date;
         document.getElementById('date').innerHTML = dateString;
     </script>
-
 {% endblock %}
