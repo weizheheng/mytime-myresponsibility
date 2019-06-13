@@ -43,7 +43,17 @@ conn.execute('''CREATE TABLE IF NOT EXISTS task
                 (id INTEGER NOT NULL, date DATE,
                 task1 TEXT, task2 TEXT, task3 TEXT, task4 TEXT, task5 TEXT,
                 task6 TEXT, task7 TEXT, task8 TEXT, task9 TEXT, task10 TEXT,
-                task11 TEXT, task12 TEXT, task13 TEXT, task14 TEXT, task15 TEXT);''')
+                task11 TEXT, task12 TEXT, task13 TEXT, task14 TEXT, task15 TEXT,
+                cb1 TEXT DEFAULT '', cb2 TEXT DEFAULT '', cb3 TEXT DEFAULT '', cb4 TEXT DEFAULT '',
+                cb5 TEXT DEFAULT '', cb6 TEXT DEFAULT '', cb7 TEXT DEFAULT '', cb8 TEXT DEFAULT '',
+                cb9 TEXT DEFAULT '', cb10 TEXT DEFAULT '', cb11 TEXT DEFAULT '',
+                cb12 TEXT DEFAULT '', cb13 TEXT DEFAULT '', cb14 TEXT DEFAULT '',
+                cb15 TEXT DEFAULT '', ta1 TEXT DEFAULT '', ta2 TEXT DEFAULT '',
+                ta3 TEXT DEFAULT '', ta4 TEXT DEFAULT '', ta5 TEXT DEFAULT '',
+                ta6 TEXT DEFAULT '', ta7 TEXT DEFAULT '', ta8 TEXT DEFAULT '',
+                ta9 TEXT DEFAULT '', ta10 TEXT DEFAULT '', ta11 TEXT DEFAULT '',
+                ta12 TEXT DEFAULT '', ta13 TEXT DEFAULT '', ta14 TEXT DEFAULT '',
+                ta15 TEXT DEFAULT '');''')
 conn.close()
 
 @app.route("/")
@@ -126,6 +136,31 @@ def login():
             return redirect("/planning")
         else:
             return redirect("/dashboard")
+
+@app.route("/check")
+def check():
+    if request.method == "GET":
+        date = datetime.datetime.now().date()
+        condition = request.args.get("condition")
+        cb_id = request.args.get("id")
+        ta_id = request.args.get("ta")
+        conn = sqlite3.connect("mytime.db")
+        cur = conn.cursor()
+        if condition == "true":
+            checkbox = "checked"
+            textarea = "readonly"
+            cur.execute("UPDATE task SET {}=?, {}=? WHERE id=? AND date=?".format(cb_id, ta_id),
+            (checkbox, textarea, session.get("user_id"), date))
+            conn.commit()
+            conn.close()
+        else:
+            checkbox = ""
+            textarea = ""
+            cur.execute("UPDATE task SET {}=?, {}=? WHERE id=? AND date=?".format(cb_id, ta_id),
+                         (checkbox, textarea, session.get("user_id"), date))
+            conn.commit()
+            conn.close()
+        return redirect("/dashboard")
 
 @app.route("/logout")
 def logout():
@@ -253,21 +288,21 @@ def dashboard():
         if rows == None:
             return redirect("/planning")
         else:
-            task1 = request.form.get("tt0800")
-            task2 = request.form.get("tt0900")
-            task3 = request.form.get("tt1000")
-            task4 = request.form.get("tt1100")
-            task5 = request.form.get("tt1200")
-            task6 = request.form.get("tt1300")
-            task7 = request.form.get("tt1400")
-            task8 = request.form.get("tt1500")
-            task9 = request.form.get("tt1600")
-            task10 = request.form.get("tt1700")
-            task11 = request.form.get("tt1800")
-            task12 = request.form.get("tt1900")
-            task13 = request.form.get("tt2000")
-            task14 = request.form.get("tt2100")
-            task15 = request.form.get("tt2200")
+            task1 = request.form.get("ta1")
+            task2 = request.form.get("ta2")
+            task3 = request.form.get("ta3")
+            task4 = request.form.get("ta4")
+            task5 = request.form.get("ta5")
+            task6 = request.form.get("ta6")
+            task7 = request.form.get("ta7")
+            task8 = request.form.get("ta8")
+            task9 = request.form.get("ta9")
+            task10 = request.form.get("ta10")
+            task11 = request.form.get("ta11")
+            task12 = request.form.get("ta12")
+            task13 = request.form.get("ta13")
+            task14 = request.form.get("ta14")
+            task15 = request.form.get("ta15")
             user_id = session.get("user_id")
             cur.execute('''UPDATE task SET task1=?,task2=?,task3=?,task4=?,task5=?,task6=?,task7=?,
                             task8=?, task9=?,task10=?,task11=?,task12=?,task13=?,task14=?,task15=?
