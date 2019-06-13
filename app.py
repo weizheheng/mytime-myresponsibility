@@ -134,6 +134,44 @@ def logout():
 
     return redirect("/")
 
+@app.route("/reset" ,methods=["GET","POST"])
+def reset():
+    # Reset password
+    if request.method == "GET":
+        return render_template("reset.html")
+
+    else:
+        # check user input for username
+        if not request.form.get("username"):
+            return apology("Please enter username")
+
+        # check username exists in database
+        conn = sqlite3.connect("mytime.db")
+        conn.row_factory = sqlite3.Row
+        cur = conn.cursor()
+        cur.execute("SELECT username FROM user WHERE username=?", (request.form.get("username"),))
+        rows = cur.fetchone()
+        if rows == None:
+            return apology("Username does not exists")
+
+        # Check user input for password
+        if not request.form.get("password") or not request.form.get("confirmation"):
+            return apology("Please enter password and confirmation")
+
+        # Check password and confirmation match
+        if request.form.get("password") != request.form.get("confirmation"):
+            return apology("Password and confirmation do not match")
+
+        # Passes everything now update new password into database
+        hash_password = generate_password_hash(request.form.get("password"))
+        cur.execute("UPDATE user set hash=? WHERE username=?",
+                    (hash_password, request.form.get("username")))
+        conn.commit()
+        conn.close()
+
+        return redirect("/login")
+
+
 @app.route("/planning", methods=["GET", "POST"])
 @login_required
 def planning():
