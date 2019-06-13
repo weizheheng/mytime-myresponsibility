@@ -1,5 +1,6 @@
 import os
 import sys
+import datetime
 
 import sqlite3
 from sqlite3 import Error
@@ -39,7 +40,7 @@ conn.execute('''CREATE TABLE IF NOT EXISTS user
                  username TEXT NOT NULL,
                  hash TEXT NOT NULL);''')
 conn.execute('''CREATE TABLE IF NOT EXISTS task
-                (id NOT NULL,
+                (id INTEGER NOT NULL, date DATE,
                 task1 TEXT, task2 TEXT, task3 TEXT, task4 TEXT, task5 TEXT,
                 task6 TEXT, task7 TEXT, task8 TEXT, task9 TEXT, task10 TEXT,
                 task11 TEXT, task12 TEXT, task13 TEXT, task14 TEXT, task15 TEXT);''')
@@ -114,9 +115,17 @@ def login():
                 return apology("Incorrect username and/or password")
         # Remember which user has logged in
         session["user_id"] = rows['id']
+        date = datetime.datetime.now().date()
 
+
+        # Pick which site to go depends on whether the user has or has not plan for the day
+        cur.execute("SELECT * FROM task WHERE id=? AND date=?", (session.get("user_id"),date))
+        rows = cur.fetchone()
         conn.close()
-        return redirect("/planning")
+        if rows == None:
+            return redirect("/planning")
+        else:
+            return redirect("/dashboard")
 
 @app.route("/logout")
 def logout():
@@ -160,20 +169,21 @@ def planning():
         task14 = request.form.get("t2100")
         task15 = request.form.get("t2200")
         user_id = session.get("user_id")
+        date = datetime.datetime.now().date()
 
         # Insert the data into database table - task
         conn = sqlite3.connect("mytime.db")
         cur = conn.cursor()
-        cur.execute('''INSERT INTO task (id, task1, task2, task3, task4, task5,
+        cur.execute('''INSERT INTO task (id,date, task1, task2, task3, task4, task5,
                         task6, task7, task8, task9, task10, task11, task12,
-                        task13, task14, task15) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
-                        (user_id,task1,task2,task3,task4,task5,task6,task7,task8,task9,task10,task11,task12,task13,task14,task15))
+                        task13, task14, task15) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
+                        (user_id, date, task1,task2,task3,task4,task5,task6,task7,task8,task9,task10,task11,task12,task13,task14,task15))
         conn.commit()
         conn.close()
         return redirect("/dashboard")
 
 
-@app.route("/dashboard")
+@app.route("/dashboard", methods=["GET", "POST"])
 @login_required
 def dashboard():
     if request.method == "GET":
@@ -189,6 +199,48 @@ def dashboard():
         conn.close()
         return render_template("dashboard.html", username=username, rows=rows)
 
+    else:
+        # Handle condition when user wants to update their tasks of the same day
+        date = datetime.datetime.now().date()
+        conn=sqlite3.connect("mytime.db")
+        conn.row_factory=sqlite3.Row
+        cur=conn.cursor()
+        cur.execute("SELECT username FROM user WHERE id=?", (session.get("user_id"),))
+        rows = cur.fetchone()
+        username = rows['username']
+        cur.execute("SELECT * FROM task WHERE id=? AND date=?",
+                    (session.get("user_id"), date))
+
+        rows = cur.fetchone()
+        if rows == None:
+            return redirect("/planning")
+        else:
+            task1 = request.form.get("tt0800")
+            task2 = request.form.get("tt0900")
+            task3 = request.form.get("tt1000")
+            task4 = request.form.get("tt1100")
+            task5 = request.form.get("tt1200")
+            task6 = request.form.get("tt1300")
+            task7 = request.form.get("tt1400")
+            task8 = request.form.get("tt1500")
+            task9 = request.form.get("tt1600")
+            task10 = request.form.get("tt1700")
+            task11 = request.form.get("tt1800")
+            task12 = request.form.get("tt1900")
+            task13 = request.form.get("tt2000")
+            task14 = request.form.get("tt2100")
+            task15 = request.form.get("tt2200")
+            user_id = session.get("user_id")
+            cur.execute('''UPDATE task SET task1=?,task2=?,task3=?,task4=?,task5=?,task6=?,task7=?,
+                            task8=?, task9=?,task10=?,task11=?,task12=?,task13=?,task14=?,task15=?
+                            WHERE id=? AND date=?''',
+                            (task1,task2,task3,task4,task5,task6,task7,task8,task9,task10,task11,task12,task13,task14,task15,user_id,date))
+            conn.commit()
+            cur.execute("SELECT * FROM task WHERE id=? AND date=?",
+                        (session.get("user_id"),date))
+            rows = cur.fetchone()
+            conn.close()
+            return render_template("dashboard.html", username=username, rows=rows)
 
 @app.route("/history")
 def history():
