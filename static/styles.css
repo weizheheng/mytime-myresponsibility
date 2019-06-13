@@ -110,7 +110,3 @@ body {
     border: 2px solid #8bc34a;
     box-shadow: 0 0 0 0.2rem rgba(186, 195, 74, .25);
 }
-
-#readonly {
-    background-color:white;
-}

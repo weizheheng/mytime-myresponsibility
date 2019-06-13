@@ -5,178 +5,182 @@
 {% endblock %}
 
 {% block main %}
-    <div class="row">
-        <div class="col-12">
-            <span id="welcome2"> Welcome back <b>{{username}}</b>,</span><br>
-            <span id="message2"> Make <b><u><span id="date"></span></b></u> a good one! </span>
-        </div>
-    </div>
-    <div id="row1" class="row">
-        <div class="col-3">
-            <div class="time-control">
-                0800
+    <form id="dashboard", action="/dashboard" method="post">
+        <div class="row">
+            <div class="col-12">
+                <span id="welcome2"> Welcome back <b>{{username}}</b>,</span><br>
+                <span id="message2"> Make <b><u><span id="date"></span></b></u> a good one! </span>
             </div>
         </div>
-        <div class="col-3">
-            <div class="time-control">
-                0900
+        <div id="row1" class="row">
+            <div class="col-3">
+                <div class="time-control">
+                    0800
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="time-control">
+                    0900
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="time-control">
+                    1000
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="time-control">
+                    1100
+                </div>
             </div>
         </div>
-        <div class="col-3">
-            <div class="time-control">
-                1000
+        <div class="row">
+            <div class="col-3">
+                <div class="form-group green-border">
+                    <textarea name="tt0800" class="form-control">{{ rows['task1'] }}</textarea>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group green-border">
+                    <textarea name="tt0900" class="form-control">{{ rows['task2'] }}</textarea>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group green-border">
+                    <textarea name="tt1000" class="form-control">{{ rows['task3'] }}</textarea>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group green-border">
+                    <textarea name="tt1100" class="form-control">{{ rows['task4'] }}</textarea>
+                </div>
             </div>
         </div>
-        <div class="col-3">
-            <div class="time-control">
-                1100
+        <div id="row2" class="row">
+            <div class="col-3">
+                <div class="time-control">
+                    1200
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="time-control">
+                    1300
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="time-control">
+                    1400
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="time-control">
+                    1500
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-3">
-            <div class="form-group green-border">
-                <textarea id="readonly" readonly class="form-control">{{ rows['task1'] }}</textarea>
+        <div class="row">
+            <div class="col-3">
+                <div class="form-group green-border">
+                    <textarea name="tt1200" class="form-control">{{ rows['task5'] }}</textarea>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group green-border">
+                    <textarea name="tt1300" class="form-control">{{ rows['task6'] }}</textarea>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group green-border">
+                    <textarea name="tt1400" class="form-control">{{ rows['task7'] }}</textarea>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group green-border">
+                    <textarea name="tt1500" class="form-control">{{ rows['task8'] }}</textarea>
+                </div>
             </div>
         </div>
-        <div class="col-3">
-            <div class="form-group green-border">
-                <textarea id="readonly" readonly class="form-control">{{ rows['task2'] }}</textarea>
+        <div id="row3" class="row">
+            <div class="col-3">
+                <div class="time-control">
+                    1600
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="time-control">
+                    1700
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="time-control">
+                    1800
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="time-control">
+                    1900
+                </div>
             </div>
         </div>
-        <div class="col-3">
-            <div class="form-group green-border">
-                <textarea id="readonly" readonly class="form-control">{{ rows['task3'] }}</textarea>
+        <div class="row">
+            <div class="col-3">
+                <div class="form-group green-border">
+                    <textarea name="tt1600" class="form-control">{{ rows['task9'] }}</textarea>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group green-border">
+                    <textarea name="tt1700" class="form-control">{{ rows['task10'] }}</textarea>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group green-border">
+                    <textarea name="tt1800" class="form-control">{{ rows['task11'] }}</textarea>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group green-border">
+                    <textarea name="tt1900" class="form-control">{{ rows['task12'] }}</textarea>
+                </div>
             </div>
         </div>
-        <div class="col-3">
-            <div class="form-group green-border">
-                <textarea id="readonly" readonly class="form-control">{{ rows['task4'] }}</textarea>
+        <div id="row4" class="row">
+            <div class="col-3">
+                <div class="time-control">
+                    2000
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="time-control">
+                    2100
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="time-control">
+                    2200
+                </div>
             </div>
         </div>
-    </div>
-    <div id="row2" class="row">
-        <div class="col-3">
-            <div class="time-control">
-                1200
+        <div class="row">
+            <div class="col-3">
+                <div class="form-group green-border">
+                    <textarea name="tt2000" class="form-control">{{ rows['task13'] }}</textarea>
+                </div>
             </div>
-        </div>
-        <div class="col-3">
-            <div class="time-control">
-                1300
+            <div class="col-3">
+                <div class="form-group green-border">
+                    <textarea name="tt2100" class="form-control">{{ rows['task14'] }}</textarea>
+                </div>
             </div>
-        </div>
-        <div class="col-3">
-            <div class="time-control">
-                1400
+            <div class="col-3">
+                <div class="form-group green-border">
+                    <textarea name="tt2200" class="form-control">{{ rows['task15'] }}</textarea>
+                </div>
             </div>
+            <div class="col-3">
+                <button class="btn btn-primary btn-lg" type="submit">Update your day</button> 
         </div>
-        <div class="col-3">
-            <div class="time-control">
-                1500
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-3">
-            <div class="form-group green-border">
-                <textarea id="readonly" readonly class="form-control">{{ rows['task5'] }}</textarea>
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="form-group green-border">
-                <textarea id="readonly" readonly class="form-control">{{ rows['task6'] }}</textarea>
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="form-group green-border">
-                <textarea id="readonly" readonly class="form-control">{{ rows['task7'] }}</textarea>
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="form-group green-border">
-                <textarea id="readonly" readonly class="form-control">{{ rows['task8'] }}</textarea>
-            </div>
-        </div>
-    </div>
-    <div id="row3" class="row">
-        <div class="col-3">
-            <div class="time-control">
-                1600
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="time-control">
-                1700
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="time-control">
-                1800
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="time-control">
-                1900
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-3">
-            <div class="form-group green-border">
-                <textarea id="readonly" readonly class="form-control">{{ rows['task9'] }}</textarea>
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="form-group green-border">
-                <textarea id="readonly" readonly class="form-control">{{ rows['task10'] }}</textarea>
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="form-group green-border">
-                <textarea id="readonly" readonly class="form-control">{{ rows['task11'] }}</textarea>
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="form-group green-border">
-                <textarea id="readonly" readonly class="form-control">{{ rows['task12'] }}</textarea>
-            </div>
-        </div>
-    </div>
-    <div id="row4" class="row">
-        <div class="col-3">
-            <div class="time-control">
-                2000
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="time-control">
-                2100
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="time-control">
-                2200
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-3">
-            <div class="form-group green-border">
-                <textarea id="readonly" readonly class="form-control">{{ rows['task13'] }}</textarea>
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="form-group green-border">
-                <textarea id="readonly" readonly class="form-control">{{ rows['task14'] }}</textarea>
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="form-group green-border">
-                <textarea id="readonly" readonly class="form-control">{{ rows['task15'] }}</textarea>
-            </div>
-        </div>
-    </div>
+    </form>
     <script>
         var d = new Date();
         var date = d.getDate();
