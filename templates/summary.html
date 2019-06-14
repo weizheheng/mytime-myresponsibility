@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Summary
+{% endblock %}
+
+{% block main %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+            <tr>
+                <td><a href="/history?date={{row['date']}}"> {{row['date']}}</a></td>
+                <td> {{row['score']}}/15 </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
