@@ -10,7 +10,7 @@ from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from helper import login_required
+from helper import login_required, apology
 
 # Configure application
 app = Flask(__name__)
@@ -188,7 +188,7 @@ def reset():
     else:
         # check user input for username
         if not request.form.get("username"):
-            flash(u"Please enter username")
+            flash(u"Please enter username", 'danger')
             return redirect("/reset")
 
         # check username exists in database
@@ -273,7 +273,7 @@ def planning():
             conn.close()
             return redirect("/dashboard")
         else:
-            flash("You have already planned your day, update them instead!")
+            flash(u"You have already planned your day, update them instead!", 'primary')
             return redirect("/dashboard")
 
 @app.route("/dashboard", methods=["GET", "POST"])
@@ -292,7 +292,7 @@ def dashboard():
         rows = cur.fetchone()
         conn.close()
         if rows == None:
-            flash("You haven't plan your day yet")
+            flash(u"You haven't plan your day yet", 'danger')
             return redirect("/planning")
         else:
             return render_template("dashboard.html", username=username, rows=rows)
@@ -340,9 +340,39 @@ def dashboard():
             conn.close()
             return render_template("dashboard.html", username=username, rows=rows)
 
+@app.route("/summary", methods=["POST", "GET"])
+@login_required
+def summary():
+    if request.method == "POST":
+        conn = sqlite3.connect("mytime.db")
+        conn.row_factory =sqlite3.Row
+        cur = conn.cursor()
+        cur.execute("SELECT date, score FROM task WHERE id=?", (session.get("user_id"),))
+        rows = cur.fetchall()
+        conn.close()
+        return render_template("summary.html", rows=rows)
+    else:
+        conn = sqlite3.connect("mytime.db")
+        conn.row_factory =sqlite3.Row
+        cur = conn.cursor()
+        cur.execute("SELECT date, score FROM task WHERE id=?", (session.get("user_id"),))
+        rows = cur.fetchall()
+        conn.close()
+        return render_template("summary.html", rows=rows)
+
 @app.route("/history")
 def history():
-    return render_template("history.html")
+    date = request.args.get("date")
+    conn =sqlite3.connect("mytime.db")
+    conn.row_factory = sqlite3.Row
+    cur = conn.cursor()
+    cur.execute("SELECT username FROM user WHERE id=?", (session.get("user_id"),))
+    rows = cur.fetchone()
+    username = rows['username']
+    cur.execute("SELECT * FROM task WHERE id=? AND date=?", (session.get("user_id"), date))
+    rows = cur.fetchone()
+    conn.close()
+    return render_template("history.html", rows=rows, date=date, username=username)
 
 def errorhandler(e):
     """Handle error """

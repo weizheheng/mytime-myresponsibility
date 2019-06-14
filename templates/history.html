@@ -5,5 +5,197 @@
 {% endblock %}
 
 {% block main %}
-    Here is the history
+    <form id="dashboard", action="/dashboard" method="post">
+        <div class="row">
+            <div id="welcome" class="col-7">
+                <span id="welcome2"> Hello <b>{{username}}</b>,</span><br>
+                <span id="message2"> This was your tasks on <b><u>{{date}}</b></u></span>
+            </div>
+            <div class="col-5">
+                <span id="score"> Achievement: {{rows['score']}} / 15 </span><br>
+            </div>
+        </div>
+        <div id="row1" class="row">
+            <div class="col-3">
+                <div class="time-control">
+                    0800
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="time-control">
+                    0900
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="time-control">
+                    1000
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="time-control">
+                    1100
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <div class="form-group green-border">
+                    <textarea disabled class="form-control">{{ rows['task1'] }}</textarea>
+                    <input disabled type="checkbox" {{rows['cb1']}}/>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group green-border">
+                    <textarea disabled class="form-control">{{ rows['task2'] }}</textarea>
+                    <input disabled type="checkbox" {{rows['cb2']}}/>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group green-border">
+                    <textarea disabled class="form-control">{{ rows['task3'] }}</textarea>
+                    <input disabled type="checkbox" {{rows['cb3']}}/>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group green-border">
+                    <textarea disabled class="form-control">{{ rows['task4'] }}</textarea>
+                    <input disabled type="checkbox" {{rows['cb4']}}/>
+                </div>
+            </div>
+        </div>
+        <div id="row2" class="row">
+            <div class="col-3">
+                <div class="time-control">
+                    1200
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="time-control">
+                    1300
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="time-control">
+                    1400
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="time-control">
+                    1500
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <div class="form-group green-border">
+                    <textarea disabled class="form-control">{{ rows['task5'] }}</textarea>
+                    <input disabled type="checkbox" {{rows['cb5']}}/>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group green-border">
+                    <textarea disabled class="form-control">{{ rows['task6'] }}</textarea>
+                    <input disabled type="checkbox" {{rows['cb6']}}/>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group green-border">
+                    <textarea disabled class="form-control">{{ rows['task7'] }}</textarea>
+                    <input disabled type="checkbox" {{rows['cb7']}}/>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group green-border">
+                    <textarea disabled class="form-control">{{ rows['task8'] }}</textarea>
+                    <input disabled type="checkbox" {{rows['cb8']}}/>
+                </div>
+            </div>
+        </div>
+        <div id="row3" class="row">
+            <div class="col-3">
+                <div class="time-control">
+                    1600
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="time-control">
+                    1700
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="time-control">
+                    1800
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="time-control">
+                    1900
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <div class="form-group green-border">
+                    <textarea disabled class="form-control">{{ rows['task9'] }}</textarea>
+                    <input disabled type="checkbox" {{rows['cb9']}}/>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group green-border">
+                    <textarea disabled class="form-control">{{ rows['task10'] }}</textarea>
+                    <input disabled type="checkbox" {{rows['cb10']}}/>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group green-border">
+                    <textarea disabled class="form-control">{{ rows['task11'] }}</textarea>
+                    <input disabled type="checkbox" {{rows['cb11']}}/>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group green-border">
+                    <textarea disabled class="form-control">{{ rows['task12'] }}</textarea>
+                    <input disabled type="checkbox" {{rows['cb12']}}/>
+                </div>
+            </div>
+        </div>
+        <div id="row4" class="row">
+            <div class="col-3">
+                <div class="time-control">
+                    2000
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="time-control">
+                    2100
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="time-control">
+                    2200
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <div class="form-group green-border">
+                    <textarea disabled class="form-control">{{ rows['task13'] }}</textarea>
+                    <input disabled type="checkbox" {{rows['cb13']}}/>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group green-border">
+                    <textarea disabled class="form-control">{{ rows['task14'] }}</textarea>
+                    <input disabled type="checkbox" {{rows['cb14']}}/>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group green-border">
+                    <textarea disabled class="form-control">{{ rows['task15'] }}</textarea>
+                    <input disabled type="checkbox" {{rows['cb15']}}/>
+                </div>
+            </div>
+        </div>
+    </form>
+
 {% endblock %}
