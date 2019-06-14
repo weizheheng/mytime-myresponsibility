@@ -7,9 +7,12 @@
 {% block main %}
     <form id="dashboard", action="/dashboard" method="post">
         <div class="row">
-            <div class="col-12">
+            <div id="welcome" class="col-7">
                 <span id="welcome2"> Welcome back <b>{{username}}</b>,</span><br>
                 <span id="message2"> Make <b><u><span id="date"></span></b></u> a good one! </span>
+            </div>
+            <div id="score_refresh" class="col-5">
+                <span id="score"> Achievement: {{rows['score']}} / 15 </span>
             </div>
         </div>
         <div id="row1" class="row">
@@ -209,90 +212,135 @@
             var textArea = document.getElementById('ta1')
             $.get("/check?condition=" + document.getElementById('cb1').checked + '&id=' + document.getElementById('cb1').value + '&ta=' + textArea.name)
             textArea.readOnly = this.checked;
+            setTimeout(function() {
+            $('#score_refresh').load(location.href+" #score_refresh>*","");
+        }, 500);
         });
 
         document.getElementById('cb2').addEventListener('click', function() {
             var textArea = document.getElementById('ta2')
             $.get("/check?condition=" + document.getElementById('cb2').checked + '&id=' + document.getElementById('cb2').value + '&ta=' + textArea.name)
             textArea.readOnly = this.checked;
+            setTimeout(function() {
+            $('#score_refresh').load(location.href+" #score_refresh>*","");
+        }, 500);
         });
 
         document.getElementById('cb3').addEventListener('click', function() {
             var textArea = document.getElementById('ta3')
             $.get("/check?condition=" + document.getElementById('cb3').checked + '&id=' + document.getElementById('cb3').value + '&ta=' + textArea.name)
             textArea.readOnly = this.checked;
+            setTimeout(function() {
+            $('#score_refresh').load(location.href+" #score_refresh>*","");
+        }, 500);
         });
 
         document.getElementById('cb4').addEventListener('click', function() {
             var textArea = document.getElementById('ta4')
             $.get("/check?condition=" + document.getElementById('cb4').checked + '&id=' + document.getElementById('cb4').value + '&ta=' + textArea.name)
             textArea.readOnly = this.checked;
+            setTimeout(function() {
+            $('#score_refresh').load(location.href+" #score_refresh>*","");
+        }, 500);
         });
 
         document.getElementById('cb5').addEventListener('click', function() {
             var textArea = document.getElementById('ta5')
             $.get("/check?condition=" + document.getElementById('cb5').checked + '&id=' + document.getElementById('cb5').value + '&ta=' + textArea.name)
             textArea.readOnly = this.checked;
+            setTimeout(function() {
+            $('#score_refresh').load(location.href+" #score_refresh>*","");
+        }, 500);
         });
 
         document.getElementById('cb6').addEventListener('click', function() {
             var textArea = document.getElementById('ta6')
             $.get("/check?condition=" + document.getElementById('cb6').checked + '&id=' + document.getElementById('cb6').value + '&ta=' + textArea.name)
             textArea.readOnly = this.checked;
+            setTimeout(function() {
+            $('#score_refresh').load(location.href+" #score_refresh>*","");
+        }, 500);
         });
 
         document.getElementById('cb7').addEventListener('click', function() {
             var textArea = document.getElementById('ta7')
             $.get("/check?condition=" + document.getElementById('cb7').checked + '&id=' + document.getElementById('cb7').value + '&ta=' + textArea.name)
             textArea.readOnly = this.checked;
+            setTimeout(function() {
+            $('#score_refresh').load(location.href+" #score_refresh>*","");
+        }, 500);
         });
 
         document.getElementById('cb8').addEventListener('click', function() {
             var textArea = document.getElementById('ta8')
             $.get("/check?condition=" + document.getElementById('cb8').checked + '&id=' + document.getElementById('cb8').value + '&ta=' + textArea.name)
             textArea.readOnly = this.checked;
+            setTimeout(function() {
+            $('#score_refresh').load(location.href+" #score_refresh>*","");
+        }, 500);
         });
 
         document.getElementById('cb9').addEventListener('click', function() {
             var textArea = document.getElementById('ta9')
             $.get("/check?condition=" + document.getElementById('cb9').checked + '&id=' + document.getElementById('cb9').value + '&ta=' + textArea.name)
             textArea.readOnly = this.checked;
+            setTimeout(function() {
+            $('#score_refresh').load(location.href+" #score_refresh>*","");
+        }, 500);
         });
 
         document.getElementById('cb10').addEventListener('click', function() {
             var textArea = document.getElementById('ta10')
             $.get("/check?condition=" + document.getElementById('cb10').checked + '&id=' + document.getElementById('cb10').value + '&ta=' + textArea.name)
             textArea.readOnly = this.checked;
+            setTimeout(function() {
+            $('#score_refresh').load(location.href+" #score_refresh>*","");
+        }, 500);
         });
 
         document.getElementById('cb11').addEventListener('click', function() {
             var textArea = document.getElementById('ta11')
             $.get("/check?condition=" + document.getElementById('cb11').checked + '&id=' + document.getElementById('cb11').value + '&ta=' + textArea.name)
             textArea.readOnly = this.checked;
+            setTimeout(function() {
+            $('#score_refresh').load(location.href+" #score_refresh>*","");
+        }, 500);
         });
 
         document.getElementById('cb12').addEventListener('click', function() {
             var textArea = document.getElementById('ta12')
             $.get("/check?condition=" + document.getElementById('cb12').checked + '&id=' + document.getElementById('cb12').value + '&ta=' + textArea.name)
             textArea.readOnly = this.checked;
+            setTimeout(function() {
+            $('#score_refresh').load(location.href+" #score_refresh>*","");
+        }, 500);
         });
 
         document.getElementById('cb13').addEventListener('click', function() {
             var textArea = document.getElementById('ta13')
             $.get("/check?condition=" + document.getElementById('cb13').checked + '&id=' + document.getElementById('cb13').value + '&ta=' + textArea.name)
             textArea.readOnly = this.checked;
+            setTimeout(function() {
+            $('#score_refresh').load(location.href+" #score_refresh>*","");
+        }, 500);
         });
 
         document.getElementById('cb14').addEventListener('click', function() {
             var textArea = document.getElementById('ta14')
             $.get("/check?condition=" + document.getElementById('cb14').checked + '&id=' + document.getElementById('cb14').value + '&ta=' + textArea.name)
             textArea.readOnly = this.checked;
+            setTimeout(function() {
+            $('#score_refresh').load(location.href+" #score_refresh>*","");
+        }, 500);
         });
 
         document.getElementById('cb15').addEventListener('click', function() {
             var textArea = document.getElementById('ta15')
             $.get("/check?condition=" + document.getElementById('cb15').checked + '&id=' + document.getElementById('cb15').value + '&ta=' + textArea.name)
             textArea.readOnly = this.checked;
+            setTimeout(function() {
+            $('#score_refresh').load(location.href+" #score_refresh>*","");
+        }, 500);
         });
 
     </script>
