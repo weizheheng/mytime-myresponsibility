@@ -34,7 +34,8 @@ app.config["SESSION_TYPE"] ="filesystem"
 Session(app)
 
 # Configure database
-conn = sqlite3.connect("mytime.db")
+database = "mytime.db"
+conn = sqlite3.connect(database)
 conn.execute('''CREATE TABLE IF NOT EXISTS user
                 (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                  username TEXT NOT NULL,
@@ -69,7 +70,7 @@ def register():
 
     else:
         # Create database connection
-        conn = sqlite3.connect("mytime.db")
+        conn = sqlite3.connect(database)
         cur = conn.cursor()
         username = request.form.get("username")
 
@@ -118,7 +119,7 @@ def login():
             return redirect("/login")
 
         # Query database for username
-        conn = sqlite3.connect("mytime.db")
+        conn = sqlite3.connect(database)
         conn.row_factory = sqlite3.Row
         cur = conn.cursor()
         cur.execute("SELECT * FROM user WHERE username=?",(request.form.get("username"),))
@@ -151,7 +152,7 @@ def check():
         condition = request.args.get("condition")
         cb_id = request.args.get("id")
         ta_id = request.args.get("ta")
-        conn = sqlite3.connect("mytime.db")
+        conn = sqlite3.connect(database)
         cur = conn.cursor()
         if condition == "true":
             score = 1
@@ -192,7 +193,7 @@ def reset():
             return redirect("/reset")
 
         # check username exists in database
-        conn = sqlite3.connect("mytime.db")
+        conn = sqlite3.connect(database)
         conn.row_factory = sqlite3.Row
         cur = conn.cursor()
         cur.execute("SELECT username FROM user WHERE username=?", (request.form.get("username"),))
@@ -230,7 +231,7 @@ def planning():
     if request.method == "GET":
 
         # Query username from database
-        conn = sqlite3.connect("mytime.db")
+        conn = sqlite3.connect(database)
         conn.row_factory = sqlite3.Row
         cur = conn.cursor()
         cur.execute("SELECT username FROM user WHERE id = ?", (session.get("user_id"),))
@@ -260,7 +261,7 @@ def planning():
         date = datetime.datetime.now().date()
 
         # Insert the data into database table - task
-        conn = sqlite3.connect("mytime.db")
+        conn = sqlite3.connect(database)
         cur = conn.cursor()
         cur.execute("SELECT * FROM task WHERE date=?", (date,))
         checking = cur.fetchone()
@@ -282,7 +283,7 @@ def dashboard():
     if request.method == "GET":
 
         date = datetime.datetime.now().date()
-        conn=sqlite3.connect("mytime.db")
+        conn=sqlite3.connect(database)
         conn.row_factory = sqlite3.Row
         cur=conn.cursor()
         cur.execute("SELECT username FROM user WHERE id = ?", (session.get("user_id"),))
@@ -300,7 +301,7 @@ def dashboard():
     else:
         # Handle condition when user wants to update their tasks of the same day
         date = datetime.datetime.now().date()
-        conn=sqlite3.connect("mytime.db")
+        conn=sqlite3.connect(database)
         conn.row_factory=sqlite3.Row
         cur=conn.cursor()
         cur.execute("SELECT username FROM user WHERE id=?", (session.get("user_id"),))
@@ -344,7 +345,7 @@ def dashboard():
 @login_required
 def summary():
     if request.method == "POST":
-        conn = sqlite3.connect("mytime.db")
+        conn = sqlite3.connect(database)
         conn.row_factory =sqlite3.Row
         cur = conn.cursor()
         cur.execute("SELECT date, score FROM task WHERE id=?", (session.get("user_id"),))
@@ -352,7 +353,7 @@ def summary():
         conn.close()
         return render_template("summary.html", rows=rows)
     else:
-        conn = sqlite3.connect("mytime.db")
+        conn = sqlite3.connect(database)
         conn.row_factory =sqlite3.Row
         cur = conn.cursor()
         cur.execute("SELECT date, score FROM task WHERE id=?", (session.get("user_id"),))
@@ -363,7 +364,7 @@ def summary():
 @app.route("/history")
 def history():
     date = request.args.get("date")
-    conn =sqlite3.connect("mytime.db")
+    conn =sqlite3.connect(database)
     conn.row_factory = sqlite3.Row
     cur = conn.cursor()
     cur.execute("SELECT username FROM user WHERE id=?", (session.get("user_id"),))
