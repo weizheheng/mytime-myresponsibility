@@ -4,13 +4,13 @@ import datetime
 
 import sqlite3
 from sqlite3 import Error
-from flask import Flask, redirect, render_template, request, session, make_response
+from flask import Flask, redirect, render_template, request, session, make_response, flash
 from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from helper import apology, login_required
+from helper import login_required
 
 # Configure application
 app = Flask(__name__)
@@ -40,7 +40,7 @@ conn.execute('''CREATE TABLE IF NOT EXISTS user
                  username TEXT NOT NULL,
                  hash TEXT NOT NULL);''')
 conn.execute('''CREATE TABLE IF NOT EXISTS task
-                (id INTEGER NOT NULL, date DATE,
+                (id INTEGER NOT NULL, date DATE, score INTEGER DEFAULT 0,
                 task1 TEXT, task2 TEXT, task3 TEXT, task4 TEXT, task5 TEXT,
                 task6 TEXT, task7 TEXT, task8 TEXT, task9 TEXT, task10 TEXT,
                 task11 TEXT, task12 TEXT, task13 TEXT, task14 TEXT, task15 TEXT,
@@ -74,18 +74,22 @@ def register():
         username = request.form.get("username")
 
         if not request.form.get("username"):
-            return apology("Enter username")
+            flash(u"Please enter username.", 'danger')
+            return redirect("/register")
 
         # check username available or not
         cur.execute("SELECT username FROM user WHERE username=?", (username,))
         if cur.fetchone() != None:
-            return apology("Username is taken")
+            flash(u"Sorry, the username is not available.", 'danger')
+            return redirect("/register")
 
         if not request.form.get("password") or not request.form.get("confirmation"):
-            return apology("Enter password and confirmation")
+            flash(u"Please enter both password and confirmation fields.", 'danger')
+            return redirect("/register")
 
         if request.form.get("password") != request.form.get("confirmation"):
-            return apology("Password and confirmation do not match")
+            flash(u"Password and confirmation do not match.", 'danger')
+            return redirect("/register")
 
         hash_password = generate_password_hash(request.form.get("password"))
 
@@ -93,13 +97,12 @@ def register():
         cur.execute("INSERT INTO user (username, hash) VALUES (?, ?)", (username, hash_password))
         conn.commit()
         conn.close()
+        flash(u"Account registered successfully",'primary')
         return redirect("/login")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
 
-    # Forget any user_id
-    session.clear()
 
     # Login page
     if request.method == "GET":
@@ -108,9 +111,11 @@ def login():
     else:
         # check username and password
         if not request.form.get("username"):
-            return apology("Must provide username")
+            flash(u"Must provide username", 'danger')
+            return redirect("/login")
         elif not request.form.get("password"):
-            return apology("Must provide password")
+            flash(u"Must provide password", 'danger')
+            return redirect("/login")
 
         # Query database for username
         conn = sqlite3.connect("mytime.db")
@@ -119,10 +124,12 @@ def login():
         cur.execute("SELECT * FROM user WHERE username=?",(request.form.get("username"),))
         rows = cur.fetchone()
         if rows == None:
-            return apology("Username does not exists")
+            flash(u"Username does not exists, please register here.", 'danger')
+            return redirect("/register")
         else:
             if not check_password_hash(rows['hash'], request.form.get("password")):
-                return apology("Incorrect username and/or password")
+                flash(u"Incorrect username and/or password.", 'danger')
+                return redirect("/login")
         # Remember which user has logged in
         session["user_id"] = rows['id']
         date = datetime.datetime.now().date()
@@ -147,20 +154,23 @@ def check():
         conn = sqlite3.connect("mytime.db")
         cur = conn.cursor()
         if condition == "true":
+            score = 1
             checkbox = "checked"
             textarea = "readonly"
-            cur.execute("UPDATE task SET {}=?, {}=? WHERE id=? AND date=?".format(cb_id, ta_id),
-            (checkbox, textarea, session.get("user_id"), date))
+            cur.execute("UPDATE task SET {}=?, {}=?, score=score+? WHERE id=? AND date=?".format(cb_id, ta_id),
+            (checkbox, textarea, score, session.get("user_id"), date))
             conn.commit()
             conn.close()
+            return redirect("/dashboard")
         else:
+            score = -1
             checkbox = ""
             textarea = ""
-            cur.execute("UPDATE task SET {}=?, {}=? WHERE id=? AND date=?".format(cb_id, ta_id),
-                         (checkbox, textarea, session.get("user_id"), date))
+            cur.execute("UPDATE task SET {}=?, {}=?, score=score+? WHERE id=? AND date=?".format(cb_id, ta_id),
+                         (checkbox, textarea, score, session.get("user_id"), date))
             conn.commit()
             conn.close()
-        return redirect("/dashboard")
+            return redirect("/dashboard")
 
 @app.route("/logout")
 def logout():
@@ -178,7 +188,8 @@ def reset():
     else:
         # check user input for username
         if not request.form.get("username"):
-            return apology("Please enter username")
+            flash(u"Please enter username")
+            return redirect("/reset")
 
         # check username exists in database
         conn = sqlite3.connect("mytime.db")
@@ -187,15 +198,18 @@ def reset():
         cur.execute("SELECT username FROM user WHERE username=?", (request.form.get("username"),))
         rows = cur.fetchone()
         if rows == None:
-            return apology("Username does not exists")
+            flash(u"Sorry, the username does not exists", 'danger')
+            return redirect("/reset")
 
         # Check user input for password
         if not request.form.get("password") or not request.form.get("confirmation"):
-            return apology("Please enter password and confirmation")
+            flash(u"Please enter both password and confirmation fields", 'danger')
+            return redirect("/reset")
 
         # Check password and confirmation match
         if request.form.get("password") != request.form.get("confirmation"):
-            return apology("Password and confirmation do not match")
+            flash(u"Make sure the new password and confirmation match", 'danger')
+            return redirect("/reset")
 
         # Passes everything now update new password into database
         hash_password = generate_password_hash(request.form.get("password"))
@@ -204,6 +218,7 @@ def reset():
         conn.commit()
         conn.close()
 
+        flash(u"Password changed successfully!", 'primary')
         return redirect("/login")
 
 
@@ -247,30 +262,40 @@ def planning():
         # Insert the data into database table - task
         conn = sqlite3.connect("mytime.db")
         cur = conn.cursor()
-        cur.execute('''INSERT INTO task (id,date, task1, task2, task3, task4, task5,
+        cur.execute("SELECT * FROM task WHERE date=?", (date,))
+        checking = cur.fetchone()
+        if checking == None:
+            cur.execute('''INSERT INTO task (id,date, task1, task2, task3, task4, task5,
                         task6, task7, task8, task9, task10, task11, task12,
                         task13, task14, task15) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',
                         (user_id, date, task1,task2,task3,task4,task5,task6,task7,task8,task9,task10,task11,task12,task13,task14,task15))
-        conn.commit()
-        conn.close()
-        return redirect("/dashboard")
-
+            conn.commit()
+            conn.close()
+            return redirect("/dashboard")
+        else:
+            flash("You have already planned your day, update them instead!")
+            return redirect("/dashboard")
 
 @app.route("/dashboard", methods=["GET", "POST"])
 @login_required
 def dashboard():
     if request.method == "GET":
 
+        date = datetime.datetime.now().date()
         conn=sqlite3.connect("mytime.db")
         conn.row_factory = sqlite3.Row
         cur=conn.cursor()
         cur.execute("SELECT username FROM user WHERE id = ?", (session.get("user_id"),))
         rows = cur.fetchone()
         username = rows['username']
-        cur.execute("SELECT * FROM task WHERE id=?", (session.get("user_id"),))
+        cur.execute("SELECT * FROM task WHERE id=? and date=?", (session.get("user_id"), date))
         rows = cur.fetchone()
         conn.close()
-        return render_template("dashboard.html", username=username, rows=rows)
+        if rows == None:
+            flash("You haven't plan your day yet")
+            return redirect("/planning")
+        else:
+            return render_template("dashboard.html", username=username, rows=rows)
 
     else:
         # Handle condition when user wants to update their tasks of the same day
