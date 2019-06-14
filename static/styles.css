@@ -79,10 +79,18 @@ body {
     font-size: 30px;
 }
 
-#welcome1, #message1, #welcome2, #message2 {
+#welcome1, #message1 {
     font-size: 30px;
 }
 
+#welcome2, #message2 {
+    font-size: 30px;
+    text-align:center;
+}
+
+#welcome {
+    text-align:right;
+}
 
 #first_row, #sec_row, #third_row, #fourth_row, #row1, #row2, #row3, #row4 {
     padding-top:30px;
