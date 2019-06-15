@@ -8,7 +8,7 @@ As the name suggests, the theme of this web application is time management. Many
 
 ## Video
 
-I have posted a video on youtube introducing this web application. Feel free to have a look through this link, [video](http://youtube.com), and I am more than happy to hear from you guys! Cheers
+I have posted a video on youtube introducing this web application. Feel free to have a look through this link, [video](https://youtu.be/c6YiyP2a2Pc), and I am more than happy to hear from you guys! Cheers
 
 ## Future Work
 1. It will be better if this application has notification functions, where it can send desktop notification to the user 5 minutes before the task begins and ends.
