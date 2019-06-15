@@ -10,3 +10,8 @@ As the name suggests, the theme of this web application is time management. Many
 
 I have posted a video on youtube introducing this web application. Feel free to have a look through this link, [video](http://youtube.com), and I am more than happy to hear from you guys! Cheers
 
+## Future Work
+1. It will be better if this application has notification functions, where it can send desktop notification to the user 5 minutes before the task begins and ends.
+2. More flexible in term of planning and organizing (Currently the application only allows users to plan for "today" not "tomorrow" and the time blocks has been fixed at one hour interval starting from 8am to 10pm).
+3. Aesthetic, it might not look "great" now!
+
