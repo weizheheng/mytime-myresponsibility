@@ -263,7 +263,7 @@ def planning():
         # Insert the data into database table - task
         conn = sqlite3.connect(database)
         cur = conn.cursor()
-        cur.execute("SELECT * FROM task WHERE date=?", (date,))
+        cur.execute("SELECT * FROM task WHERE id=? AND date=?", (session.get("user_id"),date))
         checking = cur.fetchone()
         if checking == None:
             cur.execute('''INSERT INTO task (id,date, task1, task2, task3, task4, task5,
